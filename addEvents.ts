@@ -40,7 +40,7 @@ async function main() {
     const itemCanceledOptions = {
         chainId: moralisChainId,
         address: contractAddress,
-        topic: "ItemCanceled(address,address,uint256",
+        topic: "ItemCanceled(address,address,uint256)",
         sync_historical: true,
         abi: itemCanceledAbi,
         tableName: "ItemCanceled",
