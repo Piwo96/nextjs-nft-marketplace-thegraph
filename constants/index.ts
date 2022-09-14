@@ -15,7 +15,12 @@ export const getContractAddresses = () => {
     return contractAddresses;
 };
 
-export const getAbi = () => {
-    const abi = JSON.parse(fs.readFileSync("constants/abi.json", "utf-8"));
+export const getNftMarketplaceAbi = () => {
+    const abi = JSON.parse(fs.readFileSync("constants/NftMarketplace.json", "utf-8"));
+    return abi;
+};
+
+export const getBasicNftAbi = () => {
+    const abi = JSON.parse(fs.readFileSync("constants/BasicNft.json", "utf-8"));
     return abi;
 };
