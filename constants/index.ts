@@ -1,6 +1,6 @@
 import fs from "fs";
 
-interface ContractAddressesInfo {
+export interface ContractAddressesInfo {
     [chainId: string]: ContractItem;
 }
 
