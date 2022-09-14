@@ -1,6 +1,6 @@
 import Moralis from "moralis-v1/node";
 import "dotenv/config";
-import { getContractAddresses, getAbi } from "./constants";
+import { getContractAddresses, getNftMarketplaceAbi } from "./constants";
 
 const chainId = process.env.chainId || 31337;
 const moralisChainId = chainId == "31337" ? "1337" : chainId;
@@ -9,7 +9,7 @@ const appId = process.env.NEXT_PUBLIC_APP_ID;
 const masterKey = process.env.masterKey;
 const contractAddresses = getContractAddresses();
 const contractAddress = contractAddresses[chainId]["NftMarketplace"][0];
-const abi = getAbi();
+const abi = getNftMarketplaceAbi();
 
 async function main() {
     await Moralis.start({ serverUrl, appId, masterKey });
