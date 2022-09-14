@@ -21,7 +21,7 @@
         "react-dom": "18.2.0",
         "react-moralis": "^1.4.2",
         "ts-node": "^10.9.1",
-        "web3uikit": "0.1.159"
+        "web3uikit": "^1.0.4"
     },
     "devDependencies": {
         "@types/node": "18.7.15",
