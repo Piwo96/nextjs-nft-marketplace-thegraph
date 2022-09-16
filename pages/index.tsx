@@ -1,24 +1,22 @@
 import type { NextPage } from 'next'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useMoralisQuery, useMoralis } from "react-moralis";
+import { useMoralis } from "react-moralis";
+import { useQuery } from "@apollo/client";
 import NftBox from "../components/NftBox";
-
+import { ContractAddressesInfo } from "../constants";
+import contractAddresses from "../constants/contractAddresses.json";
+import GET_ACTIVE_ITEMS from '../constants/subfraphQueries';
 
 const Home: NextPage = () => {
-  const { isWeb3Enabled } = useMoralis();
-  const { data: listedNfts, isFetching: fetchingListedNfts } = useMoralisQuery(
-    // TableName
-    // Function for the query
-    "ActiveItem",
-    (query) => query.limit(10).descending("tokenId")
-  );
-  console.log(listedNfts);
+  const { chainId, isWeb3Enabled } = useMoralis();
+  const chainString = chainId ? parseInt(chainId).toString() : "31337";
+  const marketplaceAddress = (contractAddresses as ContractAddressesInfo)[chainString].NftMarketplace[0];
 
+  const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS);
 
   const renderFetchingNfts = () => {
     return(
-      <div>Loading ...</div>
+      <div>Loading ... </div>
     )
   }
 
@@ -27,18 +25,16 @@ const Home: NextPage = () => {
       <div className="container mx-auto">
         <h1 className='py-4 px-4 font-bold txt-2xl'>Recently Listed</h1>
           <div className='flex flex-wrap'>
-            {listedNfts.map((nft, index) => {
-              console.log(nft.attributes);
-              const {price, nftAddress, tokenId, marketplaceAddress, seller} = nft.attributes;
+            {listedNfts.activeItems.map((nft: any) => {
+              const {price, nftAddress, tokenId, seller} = nft;
               return (
                 <div>
                   <NftBox 
-                    price={price} 
-                    nftAddress={nftAddress} 
-                    tokenId={tokenId} 
+                    price={price!} 
+                    nftAddress={nftAddress!} 
+                    tokenId={tokenId!} 
                     marketplaceAddress={marketplaceAddress}
-                    seller={seller}
-                    key={index}/>
+                    seller={seller!}/>
                 </div>)
             })}
         </div>
@@ -49,7 +45,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
         {isWeb3Enabled
-          ? (fetchingListedNfts ? renderFetchingNfts() : renderNftsFetched())
+          ? (loading || !listedNfts ? renderFetchingNfts() : renderNftsFetched())
           : <div>Please connect your wallet</div>}
     </div>
   )

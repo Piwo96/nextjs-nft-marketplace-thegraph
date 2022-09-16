@@ -52,7 +52,7 @@ const UpdatListingModal = ({nftAddress, tokenId, isVisible, marketplaceAddress, 
             <Input 
                 label="Update listing price in l1 Currency (Eth)"
                 name="New listing price"
-                type="number"
+                type="text"
                 onChange={(event) => {
                     setPriceToUpdateListingWith(event.target.value);
                 }}/>

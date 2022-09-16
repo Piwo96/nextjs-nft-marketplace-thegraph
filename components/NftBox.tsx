@@ -60,7 +60,6 @@ const NftBox = ({price, nftAddress, tokenId, marketplaceAddress, seller}: NftBox
 
     async function updateUI(){
         const tokenURI = await getTokenURI();
-        console.log(`The TokenURI is: ${tokenURI}`);
         if(tokenURI){
             const requestURL = tokenURI.toString().replace("ipfs://", "https://ipfs.io/ipfs/");
             const tokenURIResponse = await (await fetch(requestURL)).json();
